@@ -32,7 +32,7 @@ func (c Children) Render() string {
 			return in.Render()
 		}
 
-		return fmt.Sprintf("%s\n%s", agg, in.Render())
+		return fmt.Sprintf("%s%s", agg, in.Render())
 	})
 }
 
