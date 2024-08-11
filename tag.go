@@ -2,6 +2,7 @@ package gml
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 
 	"github.com/Meduzz/helper/fp/slice"
@@ -29,19 +30,20 @@ func New(name string, child Tag, attributes ...string) Tag {
 
 func (t *TagImpl) Render() string {
 	attributes := merge(t.Attributes)
-	child := t.Child.Render()
 
 	if len(attributes) > 0 {
-		if len(child) > 0 {
-			return fmt.Sprintf("<%s %s>%s</%s>", t.Name, attributes, child, t.Name)
-		} else {
+		if reflect.TypeOf(t.Child) == reflect.TypeOf(&EmptyTag{}) || t.Child == nil {
 			return fmt.Sprintf("<%s %s />", t.Name, attributes)
+		} else {
+			child := t.Child.Render()
+			return fmt.Sprintf("<%s %s>%s</%s>", t.Name, attributes, child, t.Name)
 		}
 	} else {
-		if len(child) > 0 {
-			return fmt.Sprintf("<%s>%s</%s>", t.Name, child, t.Name)
-		} else {
+		if reflect.TypeOf(t.Child) == reflect.TypeOf(&EmptyTag{}) || t.Child == nil {
 			return fmt.Sprintf("<%s />", t.Name)
+		} else {
+			child := t.Child.Render()
+			return fmt.Sprintf("<%s>%s</%s>", t.Name, child, t.Name)
 		}
 	}
 }

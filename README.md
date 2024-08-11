@@ -20,3 +20,6 @@ Results in:
 ```
 <div>Hello world!</div>
 ```
+
+### Empty tags
+If tags are fed a `gml.Empty()`, then they will close directly, ie become `<script />` instead of `<script></script>`. To keep them "open" feed anything else in there, like an empty text: `gml.Text("")`.
