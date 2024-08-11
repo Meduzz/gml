@@ -57,7 +57,7 @@ func TestTags(t *testing.T) {
 		})
 
 		t.Run("if conditions are ... fun", func(t *testing.T) {
-			subject := logic.If(true, gml.Text("Yes"), gml.Text("No"))
+			subject := logic.When(true, gml.Text("Yes"), gml.Text("No"))
 
 			result := subject.Render()
 			println(result)
@@ -67,7 +67,7 @@ func TestTags(t *testing.T) {
 			}
 
 			t.Run("and the else?", func(t *testing.T) {
-				subject := logic.If(false, gml.Text("Yes"), gml.Text("No"))
+				subject := logic.When(false, gml.Text("Yes"), gml.Text("No"))
 
 				result := subject.Render()
 				println(result)

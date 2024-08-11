@@ -5,8 +5,8 @@ import (
 	"github.com/Meduzz/helper/fp/slice"
 )
 
-// If - evaluates condition and returns then or otherwise. If otherwise is nil, gml.Empty() is returned.
-func If(condition bool, then gml.Tag, otherwise gml.Tag) gml.Tag {
+// When - evaluates condition and returns then or otherwise. When otherwise is nil, gml.Empty() is returned.
+func When(condition bool, then gml.Tag, otherwise gml.Tag) gml.Tag {
 	if otherwise == nil {
 		otherwise = gml.Empty()
 	}
