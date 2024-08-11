@@ -81,7 +81,7 @@ func TestTags(t *testing.T) {
 		t.Run("Iterate stuff and other goodies", func(t *testing.T) {
 			longList := []int{1, 2, 3}
 
-			subject := logic.Iterate(longList, func(t int) gml.Tag { return tags.Li(gml.Text(fmt.Sprintf("%d", t))) }, nil)
+			subject := logic.Slice(longList, func(t int) gml.Tag { return tags.Li(gml.Text(fmt.Sprintf("%d", t))) }, nil)
 			result := subject.Render()
 
 			println(result)
@@ -93,7 +93,7 @@ func TestTags(t *testing.T) {
 			}
 
 			t.Run("and the else?", func(t *testing.T) {
-				subject := logic.Iterate(nil, func(t int) gml.Tag { return gml.Empty() }, gml.Text("Im empty!"))
+				subject := logic.Slice(nil, func(t int) gml.Tag { return gml.Empty() }, gml.Text("Im empty!"))
 				result := subject.Render()
 
 				println(result)
@@ -102,6 +102,38 @@ func TestTags(t *testing.T) {
 
 				if result != expected {
 					t.Error("the (else) iteration went wrong!")
+				}
+			})
+		})
+
+		t.Run("maps are the future, right?", func(t *testing.T) {
+			data := make(map[string]int)
+			data["1"] = 1
+			data["2"] = 2
+
+			subject := logic.Map(data, func(key string, value int) gml.Tag {
+				return tags.P(gml.Text(fmt.Sprintf("%s=%d", key, value)))
+			}, nil)
+
+			result := subject.Render()
+			println(result)
+
+			expected := "<p>1=1</p><p>2=2</p>"
+
+			if result != expected {
+				t.Error("result did not match expected")
+			}
+
+			t.Run("what if else otherwise", func(t *testing.T) {
+				subject := logic.Map(nil, func(key string, value int) gml.Tag {
+					return gml.Empty()
+				}, gml.Text("Otherwise"))
+
+				result := subject.Render()
+				println(result)
+
+				if result != "Otherwise" {
+					t.Error("result was off... by a bit")
 				}
 			})
 		})
