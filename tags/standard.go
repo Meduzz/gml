@@ -163,15 +163,15 @@ func Label(child gml.Tag, attributes ...string) gml.Tag {
 }
 
 func Input(child gml.Tag, attributes ...string) gml.Tag {
-	return gml.New("span", child, attributes...)
+	return gml.New("input", child, attributes...)
 }
 
 func Select(child gml.Tag, attributes ...string) gml.Tag {
-	return gml.New("span", child, attributes...)
+	return gml.New("select", child, attributes...)
 }
 
 func Option(child gml.Tag, attributes ...string) gml.Tag {
-	return gml.New("span", child, attributes...)
+	return gml.New("option", child, attributes...)
 }
 
 func Optgroup(child gml.Tag, attributes ...string) gml.Tag {
