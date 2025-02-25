@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Meduzz/gml"
+	"github.com/Meduzz/gml/attr"
 	"github.com/Meduzz/gml/cms"
 	"github.com/Meduzz/gml/components"
 	. "github.com/Meduzz/gml/tags"
@@ -15,7 +16,7 @@ func main() {
 }
 
 // plain gml.Tag
-var html = Html(gml.Tags(Head(Title(gml.Text("Hello world!"))), Body(gml.Tags(H1(gml.Text("Hello world!"), "class", "blink"), Div(gml.Text("Welcome to the future?"))))))
+var html = Html(gml.Tags(Head(Title(gml.Text("Hello world!"))), Body(gml.Tags(H1(gml.Text("Hello world!"), attr.Class("blink")), Div(gml.Text("Welcome to the future?"))))))
 
 // cms generated json
 var cmsJson = &cms.Static{
@@ -55,7 +56,7 @@ type Greeting struct {
 
 // gml component
 var component = func(data *Greeting) gml.Tag {
-	return Html(gml.Tags(Head(Title(gml.Text(data.Greeting))), Body(gml.Tags(H1(gml.Text(data.Greeting), "class", "blink"), Div(gml.Text(data.Message))))))
+	return Html(gml.Tags(Head(Title(gml.Text(data.Greeting))), Body(gml.Tags(H1(gml.Text(data.Greeting), attr.Class("blink")), Div(gml.Text(data.Message))))))
 }
 
 var (

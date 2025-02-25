@@ -30,7 +30,7 @@ func H(hstring string, child Tag) Tag {
 	attrs := fetchAttrs(hstring)
 
 	if len(attrs) > 0 {
-		tag.Attributes = append(tag.Attributes, attrs...)
+		tag.Attributes = append(tag.Attributes, Attributes(attrs...))
 	}
 
 	return tag
@@ -88,7 +88,7 @@ func fetchClasses(hstring string) []string {
 	classes := strings.Split(hstring, ".")
 
 	if len(classes) > 0 {
-		slice.ForEach[string](classes, func(s string) {
+		slice.ForEach(classes, func(s string) {
 			if len(s) == 0 {
 				return
 			}

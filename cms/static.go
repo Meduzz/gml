@@ -24,10 +24,10 @@ func transform(in *Static) gml.Tag {
 			return transform(it)
 		})
 
-		return gml.New(in.Tag, gml.Tags(children...), in.Attributes...)
+		return gml.New(in.Tag, gml.Tags(children...), gml.Attributes(in.Attributes...))
 	} else if in.Text != "" {
-		return gml.New(in.Tag, gml.Text(in.Text), in.Attributes...)
+		return gml.New(in.Tag, gml.Text(in.Text), gml.Attributes(in.Attributes...))
 	} else {
-		return gml.New(in.Tag, gml.Empty(), in.Attributes...)
+		return gml.New(in.Tag, gml.Empty(), gml.Attributes(in.Attributes...))
 	}
 }

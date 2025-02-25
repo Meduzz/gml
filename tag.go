@@ -16,11 +16,11 @@ type (
 	TagImpl struct {
 		Name       string
 		Child      Tag
-		Attributes []string
+		Attributes []Attribute
 	}
 )
 
-func New(name string, child Tag, attributes ...string) Tag {
+func New(name string, child Tag, attributes ...Attribute) Tag {
 	return &TagImpl{
 		Name:       name,
 		Child:      child,
@@ -49,10 +49,10 @@ func (t *TagImpl) Render() string {
 }
 
 func (t *TagImpl) Attribute(key, value string) {
-	t.Attributes = append(t.Attributes, key, value)
+	t.Attributes = append(t.Attributes, StringAttribute(key, value))
 }
 
-func merge(data []string) string {
+func merge(data []Attribute) string {
 	stage := make([]string, 0)
 
 	length := len(data)
