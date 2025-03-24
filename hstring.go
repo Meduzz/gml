@@ -30,7 +30,7 @@ func H(hstring string, child Tag) Tag {
 	attrs := fetchAttrs(hstring)
 
 	if len(attrs) > 0 {
-		tag.Attributes = append(tag.Attributes, Attributes(attrs...))
+		tag.Attributes = append(tag.Attributes, attrs...)
 	}
 
 	return tag
@@ -100,13 +100,14 @@ func fetchClasses(hstring string) []string {
 	return classesToKeep
 }
 
-func fetchAttrs(hstring string) []string {
+func fetchAttrs(hstring string) []Attribute {
 	attrStart := strings.Index(hstring, "(")
 
 	if attrStart > -1 {
+		// drop everything before (
 		hstring = hstring[attrStart+1:]
 	} else {
-		return make([]string, 0)
+		return []Attribute{}
 	}
 
 	attrEnd := strings.Index(hstring, ")")
@@ -115,19 +116,22 @@ func fetchAttrs(hstring string) []string {
 		hstring = hstring[:attrEnd]
 	}
 
-	var rawAttrs []string
+	// the easy way out
+	// return []Attribute{hstring}
 
-	r := regexp.MustCompile("\" ")
+	// Define the regular expression to match attribute-value pairs
+	re := regexp.MustCompile(`(\w+)(?:="([^"]*)")?`)
 
-	if !r.MatchString(hstring) {
-		rawAttrs = []string{hstring}
-	} else {
-		rawAttrs = r.Split(hstring, -1)
-	}
+	// Find all matches in the input string
+	matches := re.FindAllStringSubmatch(hstring, -1)
 
-	return slice.FlatMap(rawAttrs, func(attr string) []string {
-		parts := strings.Split(attr, "=")
-
-		return []string{parts[0], strings.Trim(parts[1], `"`)}
+	return slice.Map(matches, func(attr []string) Attribute {
+		if len(attr) == 3 {
+			return StringAttribute(attr[1], attr[2])
+		} else if len(attr) == 2 {
+			return Attribute{attr[1]}
+		} else {
+			return Attribute{}
+		}
 	})
 }

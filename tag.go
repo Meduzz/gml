@@ -53,19 +53,18 @@ func (t *TagImpl) Attribute(key, value string) {
 }
 
 func merge(data []Attribute) string {
-	stage := make([]string, 0)
+	attribs := slice.Map(data, func(pair Attribute) string {
+		if len(pair) == 2 {
+			key := pair[0]
+			value := pair[1]
 
-	length := len(data)
-
-	for i := 0; i < length; i += 2 {
-		pair := slice.Take(slice.Skip(data, i), 2)
-
-		if len(pair) < 2 {
-			continue
+			return fmt.Sprintf("%s=\"%s\"", key, value)
+		} else if len(pair) == 0 {
+			return ""
+		} else {
+			return pair[0]
 		}
+	})
 
-		stage = append(stage, fmt.Sprintf(`%s="%s"`, pair[0], pair[1]))
-	}
-
-	return strings.Join(stage, " ")
+	return strings.Join(attribs, " ")
 }
