@@ -73,3 +73,55 @@ func Minlength(length int) gml.Attribute {
 func Pattern(regex string) gml.Attribute {
 	return gml.StringAttribute("pattern", regex)
 }
+
+func Action(action string) gml.Attribute {
+	return gml.StringAttribute("action", action)
+}
+
+func Alpha() gml.Attribute {
+	return gml.AnyAttribute("alpha", true)
+}
+
+func MinLength(size int) gml.Attribute {
+	return gml.AnyAttribute("minlength", size)
+}
+
+func MaxLength(size int) gml.Attribute {
+	return gml.AnyAttribute("maxlength", size)
+}
+
+func Multiple() gml.Attribute {
+	return gml.AnyAttribute("multiple", true)
+}
+
+func Rel(value string) gml.Attribute {
+	return gml.StringAttribute("rel", value)
+}
+
+func Async() gml.Attribute {
+	return gml.AnyAttribute("async", true)
+}
+
+func Module() gml.Attribute {
+	return gml.AnyAttribute("module", true)
+}
+
+func Defer() gml.Attribute {
+	return gml.AnyAttribute("defer", true)
+}
+
+func Autocomplete(value string) gml.Attribute {
+	return gml.StringAttribute("autocomplete", value)
+}
+
+func Checked(value bool) gml.Attribute {
+	return gml.AnyAttribute("checked", value)
+}
+
+func Contenteditable(value bool) gml.Attribute {
+	return gml.AnyAttribute("contenteditable", value)
+}
+
+func Rows(value int) gml.Attribute {
+	return gml.AnyAttribute("rows", value)
+}

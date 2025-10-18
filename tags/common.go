@@ -181,3 +181,115 @@ func Optgroup(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
 func Textarea(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
 	return gml.New("textarea", child, attributes...)
 }
+
+func Style(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("style", child, attributes...)
+}
+
+func Header(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("header", child, attributes...)
+}
+
+func Main(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("main", child, attributes...)
+}
+
+func Hr(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("hr", child, attributes...)
+}
+
+func Br(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("br", child, attributes...)
+}
+
+func Small(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("small", child, attributes...)
+}
+
+func Blockquote(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("blockquote", child, attributes...)
+}
+
+func Cite(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("cite", child, attributes...)
+}
+
+func Code(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("code", child, attributes...)
+}
+
+func Datalist(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("datalist", child, attributes...)
+}
+
+func Del(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("del", child, attributes...)
+}
+
+func Ins(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("ins", child, attributes...)
+}
+
+func I(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("i", child, attributes...)
+}
+
+func Output(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("output", child, attributes...)
+}
+
+func Q(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("q", child, attributes...)
+}
+
+func S(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("s", child, attributes...)
+}
+
+func Script(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("script", child, attributes...)
+}
+
+func Search(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("search", child, attributes...)
+}
+
+func Source(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("source", child, attributes...)
+}
+
+func Video(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("video", child, attributes...)
+}
+
+func Audio(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("audio", child, attributes...)
+}
+
+func Strong(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("strong", child, attributes...)
+}
+
+func Sub(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("sub", child, attributes...)
+}
+
+func Sup(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("sup", child, attributes...)
+}
+
+func Time(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("time", child, attributes...)
+}
+
+func Track(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("track", child, attributes...)
+}
+
+func U(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("u", child, attributes...)
+}
+
+func Var(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("var", child, attributes...)
+}
