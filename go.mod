@@ -1,5 +1,5 @@
 module github.com/Meduzz/gml
 
-go 1.23.3
+go 1.25.0
 
-require github.com/Meduzz/helper v0.0.0-20240730101358-04a510a685f3
+require github.com/Meduzz/helper v0.0.0-20260712145634-7b1591d48d6d
