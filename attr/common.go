@@ -125,3 +125,27 @@ func Contenteditable(value bool) gml.Attribute {
 func Rows(value int) gml.Attribute {
 	return gml.AnyAttribute("rows", value)
 }
+
+func Method(value string) gml.Attribute {
+	return gml.StringAttribute("method", value)
+}
+
+func Content(value string) gml.Attribute {
+	return gml.StringAttribute("content", value)
+}
+
+func Media(value string) gml.Attribute {
+	return gml.StringAttribute("media", value)
+}
+
+func As(value string) gml.Attribute {
+	return gml.StringAttribute("as", value)
+}
+
+func Sizes(value string) gml.Attribute {
+	return gml.StringAttribute("sizes", value)
+}
+
+func Charset(value string) gml.Attribute {
+	return gml.StringAttribute("charset", value)
+}
