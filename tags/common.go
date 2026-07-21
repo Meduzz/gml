@@ -293,3 +293,11 @@ func U(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
 func Var(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
 	return gml.New("var", child, attributes...)
 }
+
+func Meta(attributes ...gml.Attribute) gml.Tag {
+	return gml.New("meta", gml.Empty(), attributes...)
+}
+
+func Base(url string, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("base", gml.Empty(), attributes...)
+}
