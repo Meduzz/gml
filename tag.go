@@ -2,7 +2,6 @@ package gml
 
 import (
 	"fmt"
-	"reflect"
 	"strings"
 
 	"github.com/Meduzz/helper/fp/slice"
@@ -29,23 +28,25 @@ func New(name string, child Tag, attributes ...Attribute) Tag {
 }
 
 func (t *TagImpl) Render() string {
+	// If Name is empty, render as empty string (even if attributes exist, they are ignored)
+	if t.Name == "" {
+		return ""
+	}
+
 	attributes := merge(t.Attributes)
 
-	if len(attributes) > 0 {
-		if reflect.TypeOf(t.Child) == reflect.TypeOf(&EmptyTag{}) || t.Child == nil {
+	if t.Child == nil {
+		if len(attributes) > 0 {
 			return fmt.Sprintf("<%s %s />", t.Name, attributes)
-		} else {
-			child := t.Child.Render()
-			return fmt.Sprintf("<%s %s>%s</%s>", t.Name, attributes, child, t.Name)
 		}
-	} else {
-		if reflect.TypeOf(t.Child) == reflect.TypeOf(&EmptyTag{}) || t.Child == nil {
-			return fmt.Sprintf("<%s />", t.Name)
-		} else {
-			child := t.Child.Render()
-			return fmt.Sprintf("<%s>%s</%s>", t.Name, child, t.Name)
-		}
+		return fmt.Sprintf("<%s />", t.Name)
 	}
+
+	child := t.Child.Render()
+	if len(attributes) > 0 {
+		return fmt.Sprintf("<%s %s>%s</%s>", t.Name, attributes, child, t.Name)
+	}
+	return fmt.Sprintf("<%s>%s</%s>", t.Name, child, t.Name)
 }
 
 func (t *TagImpl) Attribute(key, value string) {

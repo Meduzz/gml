@@ -9,7 +9,6 @@ import (
 type (
 	Children []Tag
 	TextTag  string
-	EmptyTag struct{}
 )
 
 // Tags - create a tag out of multiple tags.
@@ -23,7 +22,7 @@ func Text(value string) Tag {
 }
 
 func Empty() Tag {
-	return &EmptyTag{}
+	return New("", nil)
 }
 
 func (c Children) Render() string {
@@ -38,8 +37,4 @@ func (c Children) Render() string {
 
 func (t TextTag) Render() string {
 	return string(t)
-}
-
-func (e *EmptyTag) Render() string {
-	return ""
 }

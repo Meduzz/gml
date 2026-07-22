@@ -295,9 +295,9 @@ func Var(child gml.Tag, attributes ...gml.Attribute) gml.Tag {
 }
 
 func Meta(attributes ...gml.Attribute) gml.Tag {
-	return gml.New("meta", gml.Empty(), attributes...)
+	return gml.New("meta", nil, attributes...)
 }
 
 func Base(url string, attributes ...gml.Attribute) gml.Tag {
-	return gml.New("base", gml.Empty(), attributes...)
+	return gml.New("base", nil, attributes...)
 }

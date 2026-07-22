@@ -21,17 +21,17 @@ func TestTags(t *testing.T) {
 		})
 
 		t.Run("only an id", func(t *testing.T) {
-			subject := gml.H("#identifier", gml.Empty())
+			subject := gml.H("#identifier", nil)
 			println(subject.Render())
 		})
 
 		t.Run("only a class", func(t *testing.T) {
-			subject := gml.H(".blue", gml.Empty())
+			subject := gml.H(".blue", nil)
 			println(subject.Render())
 		})
 
 		t.Run("only attributes", func(t *testing.T) {
-			subject := gml.H("(attr=\"value\" value=\"attr\")", gml.Empty())
+			subject := gml.H("(attr=\"value\" value=\"attr\")", nil)
 			println(subject.Render())
 		})
 	})
@@ -48,7 +48,7 @@ func TestTags(t *testing.T) {
 	})
 
 	t.Run("empty br will self close", func(t *testing.T) {
-		subject := gml.New("br", gml.Empty())
+		subject := gml.New("br", nil)
 
 		result := subject.Render()
 		println(result)

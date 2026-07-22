@@ -11,19 +11,19 @@ import (
 func Text(typ, label string, attributes ...gml.Attribute) gml.Tag {
 	attributes = append(attributes, attr.Class("input"), attr.Type(typ))
 
-	return FormControl(label, tags.Input(gml.Empty(), attributes...))
+	return FormControl(label, tags.Input(nil, attributes...))
 }
 
 func Checkbox(label string, attributes ...gml.Attribute) gml.Tag {
 	attributes = append(attributes, attr.Class("checkbox"), attr.Type("checkbox"))
 
-	return embedded(label, tags.Input(gml.Empty(), attributes...))
+	return embedded(label, tags.Input(nil, attributes...))
 }
 
 func Radio(label string, attributes ...gml.Attribute) gml.Tag {
 	attributes = append(attributes, attr.Class("radio"), attr.Type("radio"))
 
-	return embedded(label, tags.Input(gml.Empty(), attributes...))
+	return embedded(label, tags.Input(nil, attributes...))
 }
 
 func embedded(label string, child gml.Tag) gml.Tag {

@@ -6,10 +6,10 @@ import (
 	"github.com/Meduzz/helper/fp/slice"
 )
 
-// When - evaluates condition and returns then or otherwise. When otherwise is nil, gml.Empty() is returned.
+// When - evaluates condition and returns then or otherwise. When otherwise is nil, nil is returned.
 func When(condition bool, then gml.Tag, otherwise gml.Tag) gml.Tag {
 	if otherwise == nil {
-		otherwise = gml.Empty()
+		otherwise = nil
 	}
 
 	if condition {
@@ -19,14 +19,14 @@ func When(condition bool, then gml.Tag, otherwise gml.Tag) gml.Tag {
 	}
 }
 
-// Slice - iterats the provided list. If list is empty then otherwise is returned. If otherwise is nil, then gml.Empty() is returned.
+// Slice - iterats the provided list. If list is empty then otherwise is returned. If otherwise is nil, then nil is returned.
 func Slice[T any](list []T, each components.Component[T], otherwise gml.Tag) gml.Tag {
 	if len(list) == 0 {
 		if otherwise != nil {
 			return otherwise
 		}
 
-		return gml.Empty()
+		return nil
 	}
 
 	result := slice.Map(list, func(t T) gml.Tag {
@@ -36,14 +36,14 @@ func Slice[T any](list []T, each components.Component[T], otherwise gml.Tag) gml
 	return gml.Tags(result...)
 }
 
-// Map - iterate over a mpa. If list if empty then otherwise is returned. If otherwise is empty then gml.Empty() is returned.
+// Map - iterate over a mpa. If list if empty then otherwise is returned. If otherwise is nil, then nil is returned.
 func Map[T comparable, K any](data map[T]K, each components.KeyedComponent[T, K], otherwise gml.Tag) gml.Tag {
 	if len(data) == 0 {
 		if otherwise != nil {
 			return otherwise
 		}
 
-		return gml.Empty()
+		return nil
 	}
 
 	result := make([]gml.Tag, 0)
