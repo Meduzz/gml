@@ -13,6 +13,10 @@ type (
 
 // Tags - create a tag out of multiple tags.
 func Tags(children ...Tag) Tag {
+	if children == nil {
+		return nil
+	}
+
 	return Children(children)
 }
 
