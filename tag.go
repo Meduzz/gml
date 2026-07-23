@@ -2,6 +2,7 @@ package gml
 
 import (
 	"fmt"
+	"iter"
 	"strings"
 
 	"github.com/Meduzz/helper/fp/slice"
@@ -10,6 +11,7 @@ import (
 type (
 	Tag interface {
 		Render() string
+		All() iter.Seq[Tag]
 	}
 
 	TagImpl struct {
@@ -17,6 +19,10 @@ type (
 		Child      Tag
 		Attributes []Attribute
 	}
+)
+
+var (
+	_ Tag = (*TagImpl)(nil)
 )
 
 func New(name string, child Tag, attributes ...Attribute) Tag {
@@ -51,6 +57,24 @@ func (t *TagImpl) Render() string {
 
 func (t *TagImpl) Attribute(key, value string) {
 	t.Attributes = append(t.Attributes, StringAttribute(key, value))
+}
+
+func (t *TagImpl) All() iter.Seq[Tag] {
+	return func(yield func(Tag) bool) {
+		if t.Name != "" {
+			if !yield(t) {
+				return
+			}
+
+			if t.Child != nil {
+				for it := range t.Child.All() {
+					if !yield(it) {
+						break
+					}
+				}
+			}
+		}
+	}
 }
 
 func merge(data []Attribute) string {

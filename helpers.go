@@ -2,6 +2,7 @@ package gml
 
 import (
 	"fmt"
+	"iter"
 
 	"github.com/Meduzz/helper/fp/slice"
 )
@@ -9,6 +10,11 @@ import (
 type (
 	Children []Tag
 	TextTag  string
+)
+
+var (
+	_ Tag = (Children{})
+	_ Tag = (TextTag)("")
 )
 
 // Tags - create a tag out of multiple tags.
@@ -39,6 +45,24 @@ func (c Children) Render() string {
 	})
 }
 
+func (c Children) All() iter.Seq[Tag] {
+	return func(yield func(Tag) bool) {
+		for _, it := range c {
+			for cit := range it.All() {
+				if !yield(cit) {
+					break
+				}
+			}
+		}
+	}
+}
+
 func (t TextTag) Render() string {
 	return string(t)
+}
+
+func (t TextTag) All() iter.Seq[Tag] {
+	return func(yield func(Tag) bool) {
+		yield(t)
+	}
 }

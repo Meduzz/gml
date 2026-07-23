@@ -164,4 +164,50 @@ func TestTags(t *testing.T) {
 			t.Errorf("expected %q, got %q", expected, result)
 		}
 	})
+
+	t.Run("iterators goes deep", func(t *testing.T) {
+		subject := tags.Div(gml.Tags(tags.Span(gml.Text("Hello")), gml.Text("world!"), gml.Empty()))
+
+		counter := 0
+
+		for tag := range subject.All() {
+			switch tag.(type) {
+			case *gml.TagImpl, gml.TextTag:
+				counter++
+			case gml.Children:
+				t.Error("children was yielded")
+			}
+		}
+
+		if counter != 4 {
+			t.Errorf("counter was not 4 but %d", counter)
+		}
+	})
+
+	t.Run("iterators on Children also goes deep", func(t *testing.T) {
+		subject := gml.Tags(tags.Span(gml.Empty()), tags.Span(gml.Empty()), tags.Span(gml.Empty()))
+
+		counter := 0
+
+		for range subject.All() {
+			counter++
+		}
+
+		if counter != 3 {
+			t.Errorf("counter was not 3 but %d", counter)
+		}
+	})
+
+	t.Run("iterators on text does not go deep", func(t *testing.T) {
+		subject := gml.Text("Hello world!")
+		counter := 0
+
+		for range subject.All() {
+			counter++
+		}
+
+		if counter != 1 {
+			t.Errorf("counter was not 1 but %d", counter)
+		}
+	})
 }
