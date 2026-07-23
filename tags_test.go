@@ -293,4 +293,34 @@ func TestTags(t *testing.T) {
 			t.Error("tag3 did not match tag2")
 		}
 	})
+
+	t.Run("Action", func(t *testing.T) {
+		t.Run("remove action", func(t *testing.T) {
+			subject := tags.Div(gml.Tags(tags.H1(gml.Text("Welcome back")), tags.Span(gml.Text("Your password is: 'secret'."), attr.Id("password"))))
+
+			visitor := gml.CreateAction(tags.Span(gml.Empty(), attr.Id("password")), gml.RemoveAction)
+
+			visitor.Execute(subject)
+
+			expected := `<div><h1>Welcome back</h1></div>`
+
+			if subject.Render() != expected {
+				t.Errorf("expected %q, but found: %q", expected, subject.Render())
+			}
+		})
+
+		t.Run("update action", func(t *testing.T) {
+			subject := tags.Div(gml.Tags(tags.Article(gml.Text("test1")), tags.Article(gml.Text("test2")), tags.Slot(gml.Text("default value"), attr.Name("test"))))
+
+			visitor := gml.CreateAction(tags.Slot(gml.Empty(), attr.Name("test")), gml.UpdateAction(tags.Article(gml.Text("test3"))))
+
+			visitor.Execute(subject)
+
+			expected := `<div><article>test1</article><article>test2</article><article>test3</article></div>`
+
+			if subject.Render() != expected {
+				t.Errorf("expected %q, but found: %q", expected, subject.Render())
+			}
+		})
+	})
 }

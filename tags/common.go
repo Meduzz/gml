@@ -301,3 +301,7 @@ func Meta(attributes ...gml.Attribute) gml.Tag {
 func Base(url string, attributes ...gml.Attribute) gml.Tag {
 	return gml.New("base", nil, attributes...)
 }
+
+func Slot(content gml.Tag, attributes ...gml.Attribute) gml.Tag {
+	return gml.New("slot", content, attributes...)
+}

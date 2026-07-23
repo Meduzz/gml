@@ -16,5 +16,5 @@ func FormControl(label string, child gml.Tag) gml.Tag {
 }
 
 func Form(method, action string, form gml.Tag) gml.Tag {
-	return tags.Form(form, gml.StringAttribute("method", method), attr.Action(action))
+	return tags.Form(form, attr.Method(method), attr.Action(action))
 }
