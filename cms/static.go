@@ -23,17 +23,25 @@ func Render(data *Static) string {
 }
 
 func Transform(in *Static) gml.Tag {
+	attr := make([]gml.Attribute, 0)
+
+	for len(in.Attributes) > 0 {
+		pair := slice.Take(in.Attributes, 2)
+		attr = append(attr, gml.Attributes(pair...))
+		in.Attributes = slice.Skip(in.Attributes, 2)
+	}
+
 	if len(in.Children) > 0 {
 		children := slice.Map(in.Children, Transform)
 		if in.Tag == "" {
 			// For multiple roots (document node), return children directly without wrapper
 			return gml.Tags(children...)
 		}
-		return gml.New(in.Tag, gml.Tags(children...), gml.Attributes(in.Attributes...))
+		return gml.New(in.Tag, gml.Tags(children...), attr...)
 	} else if in.Text != "" {
-		return gml.New(in.Tag, gml.Text(in.Text), gml.Attributes(in.Attributes...))
+		return gml.New(in.Tag, gml.Text(in.Text), attr...)
 	} else {
-		return gml.New(in.Tag, nil, gml.Attributes(in.Attributes...))
+		return gml.New(in.Tag, nil, attr...)
 	}
 }
 
@@ -125,9 +133,12 @@ func tokenAttrToFlat(attrs []html.Attribute) []string {
 	if len(attrs) == 0 {
 		return nil
 	}
-	result := make([]string, 0, len(attrs)*2)
+
+	result := make([]string, 0)
+
 	for _, attr := range attrs {
 		result = append(result, attr.Key, attr.Val)
 	}
+
 	return result
 }

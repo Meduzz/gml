@@ -75,6 +75,19 @@ func TestFromHtml_Atributes(t *testing.T) {
 	}
 }
 
+func TestFromHtml_SingleAttribute(t *testing.T) {
+	tag, err := FromHtml(`<input type="checkbox" checked/>`)
+
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	expected := `<input type="checkbox" checked="" />`
+	if tag.Render() != expected {
+		t.Errorf("expected %q, got %q", expected, tag.Render())
+	}
+}
+
 func TestFromHtml_MultipleRoots(t *testing.T) {
 	tag, err := FromHtml("<div>First</div><span>Second</span>")
 	if err != nil {

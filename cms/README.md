@@ -16,3 +16,7 @@ But imagine a slate inspired model that allows you to define the page in one pla
 ```
 
 Named static, so there's no confusion as to how to template these things. Since you cant. But that also keeps the door open for a future variant called `Dynamic`... or something else.
+
+### Bonus content
+
+I figure I'll need to mix gml tags with good old html, so I made a function `FromHtml` that slurps html as a string and turns it into gml tags.
