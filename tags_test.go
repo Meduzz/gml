@@ -170,7 +170,7 @@ func TestTags(t *testing.T) {
 
 		counter := 0
 
-		for tag := range subject.All() {
+		for tag := range subject.All(nil) {
 			switch tag.(type) {
 			case *gml.TagImpl, gml.TextTag:
 				counter++
@@ -182,19 +182,39 @@ func TestTags(t *testing.T) {
 		if counter != 4 {
 			t.Errorf("counter was not 4 but %d", counter)
 		}
+
+		counter = 0
+
+		for range subject.All(tags.Div(gml.Empty())) {
+			counter++
+		}
+
+		if counter != 1 {
+			t.Errorf("counter was not 1 but %d", counter)
+		}
 	})
 
 	t.Run("iterators on Children also goes deep", func(t *testing.T) {
-		subject := gml.Tags(tags.Span(gml.Empty()), tags.Span(gml.Empty()), tags.Span(gml.Empty()))
+		subject := gml.Tags(tags.Span(gml.Empty(), attr.Class("test1")), tags.Span(gml.Empty(), attr.Class("test2")), tags.Span(gml.Empty(), attr.Class("test3")))
 
 		counter := 0
 
-		for range subject.All() {
+		for range subject.All(nil) {
 			counter++
 		}
 
 		if counter != 3 {
 			t.Errorf("counter was not 3 but %d", counter)
+		}
+
+		counter = 0
+
+		for range subject.All(tags.Span(gml.Empty(), attr.Class("test3"))) {
+			counter++
+		}
+
+		if counter != 1 {
+			t.Errorf("counter was not 1 but %d", counter)
 		}
 	})
 
@@ -202,12 +222,22 @@ func TestTags(t *testing.T) {
 		subject := gml.Text("Hello world!")
 		counter := 0
 
-		for range subject.All() {
+		for range subject.All(nil) {
 			counter++
 		}
 
 		if counter != 1 {
 			t.Errorf("counter was not 1 but %d", counter)
+		}
+
+		counter = 0
+
+		for range subject.All(subject) {
+			counter++
+		}
+
+		if counter != 0 {
+			t.Errorf("counter was not 0 but %d", counter)
 		}
 	})
 

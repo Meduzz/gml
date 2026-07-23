@@ -45,10 +45,10 @@ func (c Children) Render() string {
 	})
 }
 
-func (c Children) All() iter.Seq[Tag] {
+func (c Children) All(needle Tag) iter.Seq[Tag] {
 	return func(yield func(Tag) bool) {
 		for _, it := range c {
-			for cit := range it.All() {
+			for cit := range it.All(needle) {
 				if !yield(cit) {
 					break
 				}
@@ -65,9 +65,11 @@ func (t TextTag) Render() string {
 	return string(t)
 }
 
-func (t TextTag) All() iter.Seq[Tag] {
+func (t TextTag) All(needle Tag) iter.Seq[Tag] {
 	return func(yield func(Tag) bool) {
-		yield(t)
+		if needle == nil {
+			yield(t)
+		}
 	}
 }
 

@@ -10,8 +10,11 @@ import (
 
 type (
 	Tag interface {
+		// Render render the tag
 		Render() string
-		All() iter.Seq[Tag]
+		// All return iterator of all tags matching provided tags (or all tags if nil)
+		All(Tag) iter.Seq[Tag]
+		// Match return TorF depending if tags match
 		Match(Tag) bool
 	}
 
@@ -60,15 +63,17 @@ func (t *TagImpl) Attribute(key, value string) {
 	t.Attributes = append(t.Attributes, StringAttribute(key, value))
 }
 
-func (t *TagImpl) All() iter.Seq[Tag] {
+func (t *TagImpl) All(needle Tag) iter.Seq[Tag] {
 	return func(yield func(Tag) bool) {
 		if t.Name != "" {
-			if !yield(t) {
-				return
+			if needle == nil || t.Match(needle) {
+				if !yield(t) {
+					return
+				}
 			}
 
 			if t.Child != nil {
-				for it := range t.Child.All() {
+				for it := range t.Child.All(needle) {
 					if !yield(it) {
 						break
 					}
@@ -90,7 +95,6 @@ func (t *TagImpl) Match(other Tag) bool {
 	}
 
 	// Use the tag with fewer attributes as the "needle"
-	// to achieve symmetric matching behavior
 	needle, haystack := it, t
 	if len(t.Attributes) < len(it.Attributes) {
 		needle, haystack = t, it
