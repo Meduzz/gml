@@ -13,26 +13,51 @@ import (
 func TestTags(t *testing.T) {
 	t.Run("h-func does black magic", func(t *testing.T) {
 		subject := gml.H(`span#private.blue.underline(title="gml works" so="well" and="stuff" checked)`, gml.Text("Tada"))
-		println(subject.Render())
+		result := subject.Render()
+
+		expected := `<span id="private" class="blue underline" title="gml works" so="well" and="stuff" checked="">Tada</span>`
+		if result != expected {
+			t.Errorf("expected %q, got %q", expected, result)
+		}
 
 		t.Run("only a tag", func(t *testing.T) {
 			subject := gml.H("p", gml.Empty())
-			println(subject.Render())
+			result := subject.Render()
+
+			expected := "<p></p>"
+			if result != expected {
+				t.Errorf("expected %q, got %q", expected, result)
+			}
 		})
 
 		t.Run("only an id", func(t *testing.T) {
 			subject := gml.H("#identifier", nil)
-			println(subject.Render())
+			result := subject.Render()
+
+			expected := `<div id="identifier" />`
+			if result != expected {
+				t.Errorf("expected %q, got %q", expected, result)
+			}
 		})
 
 		t.Run("only a class", func(t *testing.T) {
 			subject := gml.H(".blue", nil)
-			println(subject.Render())
+			result := subject.Render()
+
+			expected := `<div class="blue" />`
+			if result != expected {
+				t.Errorf("expected %q, got %q", expected, result)
+			}
 		})
 
 		t.Run("only attributes", func(t *testing.T) {
 			subject := gml.H("(attr=\"value\" value=\"attr\")", nil)
-			println(subject.Render())
+			result := subject.Render()
+
+			expected := `<div attr="value" value="attr" />`
+			if result != expected {
+				t.Errorf("expected %q, got %q", expected, result)
+			}
 		})
 	})
 
@@ -40,7 +65,6 @@ func TestTags(t *testing.T) {
 		subject := gml.New("script", gml.Text(""))
 
 		result := subject.Render()
-		println(result)
 
 		if result != "<script></script>" {
 			t.Error("script tag was not left open")
@@ -51,7 +75,6 @@ func TestTags(t *testing.T) {
 		subject := gml.New("br", nil)
 
 		result := subject.Render()
-		println(result)
 
 		if result != "<br />" {
 			t.Error("br was not closed when empty")
@@ -62,7 +85,6 @@ func TestTags(t *testing.T) {
 		subject := logic.When(true, gml.Text("Yes"), gml.Text("No"))
 
 		result := subject.Render()
-		println(result)
 
 		if result != "Yes" {
 			t.Error("result was not yes...")
@@ -72,7 +94,6 @@ func TestTags(t *testing.T) {
 			subject := logic.When(false, gml.Text("Yes"), gml.Text("No"))
 
 			result := subject.Render()
-			println(result)
 
 			if result != "No" {
 				t.Error("result was not No...")
@@ -86,8 +107,6 @@ func TestTags(t *testing.T) {
 		subject := logic.Slice(longList, func(t int) gml.Tag { return tags.Li(gml.Text(fmt.Sprintf("%d", t))) }, nil)
 		result := subject.Render()
 
-		println(result)
-
 		expected := "<li>1</li><li>2</li><li>3</li>"
 
 		if result != expected {
@@ -97,8 +116,6 @@ func TestTags(t *testing.T) {
 		t.Run("and the else?", func(t *testing.T) {
 			subject := logic.Slice(nil, func(t int) gml.Tag { return gml.Empty() }, gml.Text("Im empty!"))
 			result := subject.Render()
-
-			println(result)
 
 			expected := "Im empty!"
 
@@ -118,7 +135,6 @@ func TestTags(t *testing.T) {
 		}, nil)
 
 		result := subject.Render()
-		println(result)
 
 		expected := "<p>1=1</p><p>2=2</p>"
 
@@ -132,7 +148,6 @@ func TestTags(t *testing.T) {
 			}, gml.Text("Otherwise"))
 
 			result := subject.Render()
-			println(result)
 
 			if result != "Otherwise" {
 				t.Error("result was off... by a bit")
@@ -144,6 +159,9 @@ func TestTags(t *testing.T) {
 		subject := tags.A(gml.Text("Link"), attr.Href("/test"), attr.Class("blue"))
 		result := subject.Render()
 
-		println(result)
+		expected := `<a href="/test" class="blue">Link</a>`
+		if result != expected {
+			t.Errorf("expected %q, got %q", expected, result)
+		}
 	})
 }
