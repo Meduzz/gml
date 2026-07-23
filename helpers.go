@@ -57,6 +57,10 @@ func (c Children) All() iter.Seq[Tag] {
 	}
 }
 
+func (c Children) Match(other Tag) bool {
+	return false
+}
+
 func (t TextTag) Render() string {
 	return string(t)
 }
@@ -65,4 +69,8 @@ func (t TextTag) All() iter.Seq[Tag] {
 	return func(yield func(Tag) bool) {
 		yield(t)
 	}
+}
+
+func (t TextTag) Match(other Tag) bool {
+	return false
 }

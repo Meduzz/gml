@@ -12,6 +12,7 @@ type (
 	Tag interface {
 		Render() string
 		All() iter.Seq[Tag]
+		Match(Tag) bool
 	}
 
 	TagImpl struct {
@@ -75,6 +76,31 @@ func (t *TagImpl) All() iter.Seq[Tag] {
 			}
 		}
 	}
+}
+
+func (t *TagImpl) Match(other Tag) bool {
+	it, ok := other.(*TagImpl)
+
+	if !ok {
+		return false
+	}
+
+	if t.Name != it.Name {
+		return false
+	}
+
+	// Use the tag with fewer attributes as the "needle"
+	// to achieve symmetric matching behavior
+	needle, haystack := it, t
+	if len(t.Attributes) < len(it.Attributes) {
+		needle, haystack = t, it
+	}
+
+	matches := slice.Filter(needle.Attributes, func(pair Attribute) bool {
+		return slice.Contains(haystack.Attributes, pair)
+	})
+
+	return len(matches) == len(needle.Attributes)
 }
 
 func merge(data []Attribute) string {

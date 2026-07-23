@@ -210,4 +210,57 @@ func TestTags(t *testing.T) {
 			t.Errorf("counter was not 1 but %d", counter)
 		}
 	})
+
+	t.Run("matches match", func(t *testing.T) {
+		tag1 := tags.Div(gml.Text("Test"), attr.Class("tag1"))
+		tag2 := tags.Div(gml.Empty(), attr.Class("tag2"))
+		tag3 := tags.Div(gml.Empty())
+		tag4 := gml.Tags(tag1, tag2, tag3)
+		tag5 := gml.Text("Test")
+		tag6 := gml.Empty()
+
+		if !tag1.Match(tag1) {
+			t.Error("tag1 did not match itself")
+		}
+
+		if tag1.Match(tag2) {
+			t.Error("tag1 matched tag2")
+		}
+
+		if !tag1.Match(tag3) {
+			t.Error("tag1 did not match tag3")
+		}
+
+		if tag1.Match(tag4) {
+			t.Error("tag1 matched tag4")
+		}
+
+		if tag1.Match(tag5) {
+			t.Error("tag1 matched tag5")
+		}
+
+		if tag1.Match(tag6) {
+			t.Error("tag1 matched tag6")
+		}
+
+		if !tag2.Match(tag3) {
+			t.Error("tag2 did not match tag3")
+		}
+
+		if tag4.Match(tag4) {
+			t.Error("tag4 matched tag4")
+		}
+
+		if tag5.Match(tag5) {
+			t.Error("tag5 matched tag5")
+		}
+
+		if !tag3.Match(tag1) {
+			t.Error("tag3 did not match tag1")
+		}
+
+		if !tag3.Match(tag2) {
+			t.Error("tag3 did not match tag2")
+		}
+	})
 }
